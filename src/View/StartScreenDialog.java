@@ -187,7 +187,7 @@ public class StartScreenDialog extends JDialog {
             setHighlight(label);
             playerColors.set(playerIndex, color);
         }
-        System.out.println(playerColors);
+       // System.out.println(playerColors);
 
 
     }
