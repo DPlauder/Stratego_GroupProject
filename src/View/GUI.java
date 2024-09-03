@@ -434,6 +434,8 @@ public class GUI {
     //TODO Erweiterung Dominik
     private void openStartScreenDialog(){
         startScreenDialog = new StartScreenDialog();
+        startScreenDialog.setSize(500, 350);
+        startScreenDialog.setLocationRelativeTo(null);
         startScreenDialog.setVisible(true);
     }
 }

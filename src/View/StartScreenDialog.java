@@ -1,5 +1,8 @@
 package View;
 
+import Config.Config;
+import Utils.Utils;
+
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
@@ -17,12 +20,7 @@ public class StartScreenDialog extends JDialog {
     private JPanel playerCount;
     private JPanel playerInfo;
     private JPanel playerOneInfo;
-    private JPanel playerOneColors;
-    private JLabel playerOneRed;
-    private JLabel playerOneBlue;
-    private JLabel playerOneYellow;
-    private JLabel playerOneGreen;
-    private JLabel playerOneBlack;
+
     private JPanel playerTwoInfo;
     private JPanel playerThreeInfo;
     private JPanel playerFourInfo;
@@ -31,21 +29,7 @@ public class StartScreenDialog extends JDialog {
     private JTextField PlayerFourName;
     private JTextField PlayerThreeName;
     private JComboBox comboMapVersion;
-    private JLabel playerFourRed;
-    private JLabel playerFourBlue;
-    private JLabel playerFourYellow;
-    private JLabel playerFourGreen;
-    private JLabel playerFourBlack;
-    private JLabel playerTwoRed;
-    private JLabel playerTwoBlue;
-    private JLabel playerTwoYellow;
-    private JLabel playerTwoGreen;
-    private JLabel playerTwoBlack;
-    private JLabel playerThreeRed;
-    private JLabel playerThreeBlue;
-    private JLabel playerThreeYellow;
-    private JLabel playerThreeGreen;
-    private JLabel playerThreeBlack;
+    private JPanel playerOneColors;
     private JPanel playerTwoColors;
     private JPanel playerThreeColors;
     private JPanel playerFourColors;
@@ -66,15 +50,15 @@ public class StartScreenDialog extends JDialog {
                 onOK();
             }
         });
-
-        initNumberRadioButtons();
-        setTwoPlayerInfos();
-
         initPlayerColorsStart();
         initColorsSelector();
+        initNumberRadioButtons();
 
-        this.pack();
-        this.setLocationRelativeTo(null);
+        setTwoPlayerInfos();
+
+
+
+
     }
 
 
@@ -90,7 +74,7 @@ public class StartScreenDialog extends JDialog {
         dialog.setVisible(true);
         System.exit(0);
     }
-    //TODO RADIOBTNS
+    //TODO RADIO BTNS
     private void initNumberRadioButtons(){
         ButtonGroup group = new ButtonGroup();
         group.add(playerCount2);
@@ -102,6 +86,7 @@ public class StartScreenDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setTwoPlayerInfos();
+                System.out.println(playerColors);
 
             }
         });
@@ -109,6 +94,7 @@ public class StartScreenDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setThreePlayerInfos();
+                System.out.println(playerColors);
 
             }
         });
@@ -116,6 +102,7 @@ public class StartScreenDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setFourPlayerInfos();
+                System.out.println(playerColors);
 
             }
         });
@@ -124,72 +111,90 @@ public class StartScreenDialog extends JDialog {
         playerNumber = 2;
         playerThreeInfo.setVisible(false);
         playerFourInfo.setVisible(false);
+        resetColors();
     }
     private void setThreePlayerInfos(){
         playerNumber = 3;
         playerThreeInfo.setVisible(true);
         playerFourInfo.setVisible(false);
+        resetColors();
     }
     private void setFourPlayerInfos(){
         playerNumber = 4;
         playerThreeInfo.setVisible(true);
         playerFourInfo.setVisible(true);
+        resetColors();
     }
 
     //TODO COLORS
 
     private void initPlayerColorsStart(){
-        playerColors =  new ArrayList<>(4);
-        playerColors.add("colorOne");
-        playerColors.add("colorTwo");
-        playerColors.add("null");
-        playerColors.add("null");
+        playerColors =  new ArrayList<>(Config.MAXPLAYERS);
+        for(int i = 0; i < (Config.MAXPLAYERS ); i++){
+            playerColors.add("");
+        }
+        System.out.println(playerColors);
     }
 
     private void initColorsSelector(){
+        List <JPanel> playerColorPanels = new ArrayList<>();
+        playerColorPanels.add(playerOneColors);
+        playerColorPanels.add(playerTwoColors);
+        playerColorPanels.add(playerThreeColors);
+        playerColorPanels.add(playerFourColors);
+        int playerIndex = 0;
 
-        Component[] playerOneColors = this.playerOneColors.getComponents();
-        Component[] playerTwoColors = this.playerTwoColors.getComponents();
-        Component[] playerThreeColors = this.playerThreeColors.getComponents();
-        Component[] playerFourColors = this.playerFourColors.getComponents();
-
-        for(Component component: playerOneColors){
-            component.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    super.mouseClicked(e);
-                    System.out.println(component.getName());
-                }
-            });
-        }
-
-        for(Component component: playerTwoColors){
-            component.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    super.mouseClicked(e);
-                    System.out.println(component.getName());
-                }
-            });
-        }
-        for(Component component: playerThreeColors){
-            component.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    super.mouseClicked(e);
-                    System.out.println(component.getName());
-                }
-            });
-        }
-        for(Component component: playerFourColors){
-            component.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    super.mouseClicked(e);
-                    System.out.println(component.getName());
-                }
-            });
+        for(JPanel panel: playerColorPanels){
+            panel.setLayout(new GridLayout(1, Config.PLAYERCOLORS.length));
+            for(String color: Config.PLAYERCOLORS){
+                JLabel label = createLabel(color, playerIndex);
+                panel.add(label);
+            }
+            playerIndex++;
         }
     }
+    private JLabel createLabel(String colorString, int playerIndex) {
+        JLabel label = new JLabel();
+        Color color = Utils.stringToColor(colorString);
+        label.setOpaque(true);
+        label.setBackground(color);
+        label.setName(colorString);
+
+        label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(!checkColorUsed(colorString, playerIndex)){
+                    setColor(colorString, playerIndex);
+                }
+                System.out.println(checkColorUsed(colorString, playerIndex));
+            }
+        });
+        return label;
+    }
+    private boolean checkColorUsed(String color, int playerIndex){
+        for(String item: playerColors){
+            if(item.equals(color) && !playerColors.get(playerIndex).equals(color)){
+                return true;
+            }
+        }
+        return false;
+    }
+    private void setColor(String color, int playerIndex){
+        if(playerColors.get(playerIndex).equals(color)){
+            playerColors.set(playerIndex, "");
+        }
+        else{
+            playerColors.set(playerIndex, color);
+        }
+        System.out.println(playerColors);
+
+
+    }
+    private void resetColors(){
+        for(int i = (Config.MAXPLAYERS - 1); i >= (Config.MAXPLAYERS - (Config.MAXPLAYERS - playerNumber)); i--){
+            playerColors.set(i, "");
+        }
+    }
+
 }
 

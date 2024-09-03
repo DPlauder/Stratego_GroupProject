@@ -123,73 +123,14 @@
                       </component>
                     </children>
                   </grid>
-                  <grid id="a0ede" binding="playerOneColors" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="a0ede" binding="playerOneColors" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
-                    <children>
-                      <component id="e525" class="javax.swing.JLabel" binding="playerOneRed">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-1769443"/>
-                          <enabled value="true"/>
-                          <foreground color="-1769443"/>
-                          <name value="colorOne"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                          <visible value="true"/>
-                        </properties>
-                      </component>
-                      <component id="bdf3b" class="javax.swing.JLabel" binding="playerOneBlue">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-15200392"/>
-                          <name value="colorTwo"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                      <component id="81ae2" class="javax.swing.JLabel" binding="playerOneYellow">
-                        <constraints>
-                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-7045610"/>
-                          <name value="colorThree"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                      <component id="657f5" class="javax.swing.JLabel" binding="playerOneGreen">
-                        <constraints>
-                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-16175103"/>
-                          <name value="colorFour"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                      <component id="3cde9" class="javax.swing.JLabel" binding="playerOneBlack">
-                        <constraints>
-                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-16777216"/>
-                          <name value="colorFive"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                    </children>
+                    <children/>
                   </grid>
                 </children>
               </grid>
@@ -221,73 +162,14 @@
                       </component>
                     </children>
                   </grid>
-                  <grid id="f9ef7" binding="playerTwoColors" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="f9ef7" binding="playerTwoColors" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
-                    <children>
-                      <component id="a41b0" class="javax.swing.JLabel" binding="playerTwoRed">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-1769443"/>
-                          <enabled value="true"/>
-                          <foreground color="-1769443"/>
-                          <name value="colorOne"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                          <visible value="true"/>
-                        </properties>
-                      </component>
-                      <component id="66b02" class="javax.swing.JLabel" binding="playerTwoBlue">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-15200392"/>
-                          <name value="colorTwo"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                      <component id="e4bbc" class="javax.swing.JLabel" binding="playerTwoYellow">
-                        <constraints>
-                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-7045610"/>
-                          <name value="colorThree"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                      <component id="ff0f1" class="javax.swing.JLabel" binding="playerTwoGreen">
-                        <constraints>
-                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-16175103"/>
-                          <name value="colorFour"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                      <component id="950ba" class="javax.swing.JLabel" binding="playerTwoBlack">
-                        <constraints>
-                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-16777216"/>
-                          <name value="colorFive"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                    </children>
+                    <children/>
                   </grid>
                 </children>
               </grid>
@@ -319,73 +201,14 @@
                       </component>
                     </children>
                   </grid>
-                  <grid id="40a4c" binding="playerThreeColors" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="40a4c" binding="playerThreeColors" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
-                    <children>
-                      <component id="d1c08" class="javax.swing.JLabel" binding="playerThreeRed">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-1769443"/>
-                          <enabled value="true"/>
-                          <foreground color="-1769443"/>
-                          <name value="colorOne"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                          <visible value="true"/>
-                        </properties>
-                      </component>
-                      <component id="2fc5c" class="javax.swing.JLabel" binding="playerThreeBlue">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-15200392"/>
-                          <name value="colorTwo"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                      <component id="8b206" class="javax.swing.JLabel" binding="playerThreeYellow">
-                        <constraints>
-                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-7045610"/>
-                          <name value="colorThree"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                      <component id="d4749" class="javax.swing.JLabel" binding="playerThreeGreen">
-                        <constraints>
-                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-16175103"/>
-                          <name value="colorFour"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                      <component id="46a9" class="javax.swing.JLabel" binding="playerThreeBlack">
-                        <constraints>
-                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-16777216"/>
-                          <name value="colorFive"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                    </children>
+                    <children/>
                   </grid>
                 </children>
               </grid>
@@ -417,73 +240,14 @@
                       </component>
                     </children>
                   </grid>
-                  <grid id="69bbb" binding="playerFourColors" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="69bbb" binding="playerFourColors" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
-                    <children>
-                      <component id="5ca99" class="javax.swing.JLabel" binding="playerFourRed">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-1769443"/>
-                          <enabled value="true"/>
-                          <foreground color="-1769443"/>
-                          <name value="colorOne"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                          <visible value="true"/>
-                        </properties>
-                      </component>
-                      <component id="40071" class="javax.swing.JLabel" binding="playerFourBlue">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-15200392"/>
-                          <name value="colorTwo"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                      <component id="57a7f" class="javax.swing.JLabel" binding="playerFourYellow">
-                        <constraints>
-                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-7045610"/>
-                          <name value="colorThree"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                      <component id="28273" class="javax.swing.JLabel" binding="playerFourGreen">
-                        <constraints>
-                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-16175103"/>
-                          <name value="colorFour"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                      <component id="fa450" class="javax.swing.JLabel" binding="playerFourBlack">
-                        <constraints>
-                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <background color="-16777216"/>
-                          <name value="colorFive"/>
-                          <opaque value="true"/>
-                          <text value=""/>
-                        </properties>
-                      </component>
-                    </children>
+                    <children/>
                   </grid>
                 </children>
               </grid>
