@@ -20,14 +20,13 @@ public class StartScreenDialog extends JDialog {
     private JPanel playerCount;
     private JPanel playerInfo;
     private JPanel playerOneInfo;
-
     private JPanel playerTwoInfo;
     private JPanel playerThreeInfo;
     private JPanel playerFourInfo;
     private JTextField playerOneName;
     private JTextField playerTwoName;
-    private JTextField PlayerFourName;
     private JTextField PlayerThreeName;
+    private JTextField PlayerFourName;
     private JComboBox comboMapVersion;
     private JPanel playerOneColors;
     private JPanel playerTwoColors;
@@ -37,6 +36,7 @@ public class StartScreenDialog extends JDialog {
 
     private int playerNumber;
     private List<String> playerColors;
+    private List<String> playerNames;
 
 
     public StartScreenDialog() {
@@ -164,14 +164,13 @@ public class StartScreenDialog extends JDialog {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(!checkColorUsed(colorString, playerIndex)){
-                    setColor(colorString, playerIndex);
+                    setColor(colorString, playerIndex, label);
                 }
-                System.out.println(checkColorUsed(colorString, playerIndex));
             }
         });
         return label;
     }
-    private boolean checkColorUsed(String color, int playerIndex){
+    private boolean checkColorUsed(String color, int playerIndex ){
         for(String item: playerColors){
             if(item.equals(color) && !playerColors.get(playerIndex).equals(color)){
                 return true;
@@ -179,11 +178,13 @@ public class StartScreenDialog extends JDialog {
         }
         return false;
     }
-    private void setColor(String color, int playerIndex){
+    private void setColor(String color, int playerIndex, JLabel label){
         if(playerColors.get(playerIndex).equals(color)){
             playerColors.set(playerIndex, "");
+            resetHighlight(label);
         }
         else{
+            setHighlight(label);
             playerColors.set(playerIndex, color);
         }
         System.out.println(playerColors);
@@ -194,6 +195,25 @@ public class StartScreenDialog extends JDialog {
         for(int i = (Config.MAXPLAYERS - 1); i >= (Config.MAXPLAYERS - (Config.MAXPLAYERS - playerNumber)); i--){
             playerColors.set(i, "");
         }
+    }
+    private void setHighlight(JLabel label){
+        label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
+    }
+    private void resetHighlight(JLabel label){
+        label.setBorder(null);
+    }
+
+    //TODO Player Names
+    private List<String> getPlayerNames(){
+        List<String> playerNames = new ArrayList<>();
+        playerNames.add(playerOneName.getName());
+        playerNames.add(playerOneName.getName());
+        playerNames.add(playerOneName.getName());
+        playerNames.add(playerOneName.getName());
+
+
+
+        return playerNames;
     }
 
 }
