@@ -2,6 +2,7 @@ package View;
 
 import Config.Config;
 import Utils.Utils;
+import Model.Settings;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -41,6 +42,9 @@ public class StartScreenDialog extends JDialog {
     private int playerNumber;
     private List<String> playerColors;
     private List<String> playerNames;
+    private String mapType;
+
+    public Settings settings;
 
 
     public StartScreenDialog() {
@@ -82,7 +86,7 @@ public class StartScreenDialog extends JDialog {
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        settings = new Settings(playerNames, playerColors, mapType);
         dispose();
     }
 
@@ -96,13 +100,6 @@ public class StartScreenDialog extends JDialog {
     }
 
 
-
-    public static void main(String[] args) {
-        StartScreenDialog dialog = new StartScreenDialog();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
     //TODO RADIO BTNS
     private void initNumberRadioButtons(){
         ButtonGroup group = new ButtonGroup();

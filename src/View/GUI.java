@@ -51,9 +51,9 @@ public class GUI {
                     JOptionPane.showMessageDialog(frame, "Distributing phase is not finished yet.");
                 } else {
                     game.nextTurn();
-                    System.out.println("Current Model.Player after turn: " + game.getCurrentPlayer().getName());
+                    System.out.println("Current Player after turn: " + game.getCurrentPlayer().getName());
                     if (game.checkWinCondition()) {
-                        JOptionPane.showMessageDialog(frame, "Model.Player " + game.getCurrentPlayer().getName() + " wins!");
+                        JOptionPane.showMessageDialog(frame, "Player " + game.getCurrentPlayer().getName() + " wins!");
                         System.exit(0);
                     }
                     updateBoard();
@@ -428,5 +428,4 @@ public class GUI {
 
         JOptionPane.showMessageDialog(frame, "All bonus armies are distributed.");
     }
-
 }

@@ -1,6 +1,10 @@
 package Model;
 
+import Config.MapTypeOne;
+import Model.Settings;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -12,143 +16,153 @@ public class Board {
         continents = new Continent[4];
 
         for (int i = 0; i < 24; i++) {
-            territories.put("Model.Territory " + (i + 1), new Territory("Model.Territory " + (i + 1)));
+            territories.put("Territory " + (i + 1), new Territory("Territory " + (i + 1)));
         }
 
         for (int i = 0; i < 4; i++) {
-            continents[i] = new Continent("Model.Continent " + (i + 1));
+            continents[i] = new Continent("Continent " + (i + 1));
             for (int j = 0; j < 6; j++) {
-                Territory territory = territories.get("Model.Territory " + (i * 6 + j + 1));
+                Territory territory = territories.get("Territory " + (i * 6 + j + 1));
                 continents[i].addTerritory(territory);
             }
             setAdjacentTerritories();
         }
     }
 
+
+
     private void setAdjacentTerritories() {
-        // Model.Territory 1
-        territories.get("Model.Territory 1").addAdjacentTerritory(territories.get("Model.Territory 2"));
-        territories.get("Model.Territory 1").addAdjacentTerritory(territories.get("Model.Territory 7"));
+        //FIXME Möglicher Fehler mit Thread
+        Map<String, List<String>> neighborsList;
+        if(Settings.MAPTYPE == 1){
+            MapTypeOne.initializeMap();
+            neighborsList = MapTypeOne.getTerritories();
+        }
 
-        // Model.Territory 2
-        territories.get("Model.Territory 2").addAdjacentTerritory(territories.get("Model.Territory 1"));
-        territories.get("Model.Territory 2").addAdjacentTerritory(territories.get("Model.Territory 3"));
-        territories.get("Model.Territory 2").addAdjacentTerritory(territories.get("Model.Territory 8"));
 
-        // Model.Territory 3
-        territories.get("Model.Territory 3").addAdjacentTerritory(territories.get("Model.Territory 2"));
-        territories.get("Model.Territory 3").addAdjacentTerritory(territories.get("Model.Territory 4"));
-        territories.get("Model.Territory 3").addAdjacentTerritory(territories.get("Model.Territory 9"));
+        // Territory 1
+        territories.get("Territory 1").addAdjacentTerritory(territories.get("Territory 2"));
+        territories.get("Territory 1").addAdjacentTerritory(territories.get("Territory 7"));
 
-        // Model.Territory 4
-        territories.get("Model.Territory 4").addAdjacentTerritory(territories.get("Model.Territory 3"));
-        territories.get("Model.Territory 4").addAdjacentTerritory(territories.get("Model.Territory 5"));
-        territories.get("Model.Territory 4").addAdjacentTerritory(territories.get("Model.Territory 10"));
+        // Territory 2
+        territories.get("Territory 2").addAdjacentTerritory(territories.get("Territory 1"));
+        territories.get("Territory 2").addAdjacentTerritory(territories.get("Territory 3"));
+        territories.get("Territory 2").addAdjacentTerritory(territories.get("Territory 8"));
 
-        // Model.Territory 5
-        territories.get("Model.Territory 5").addAdjacentTerritory(territories.get("Model.Territory 4"));
-        territories.get("Model.Territory 5").addAdjacentTerritory(territories.get("Model.Territory 6"));
-        territories.get("Model.Territory 5").addAdjacentTerritory(territories.get("Model.Territory 11"));
+        // Territory 3
+        territories.get("Territory 3").addAdjacentTerritory(territories.get("Territory 2"));
+        territories.get("Territory 3").addAdjacentTerritory(territories.get("Territory 4"));
+        territories.get("Territory 3").addAdjacentTerritory(territories.get("Territory 9"));
 
-        // Model.Territory 6
-        territories.get("Model.Territory 6").addAdjacentTerritory(territories.get("Model.Territory 5"));
-        territories.get("Model.Territory 6").addAdjacentTerritory(territories.get("Model.Territory 12"));
+        // Territory 4
+        territories.get("Territory 4").addAdjacentTerritory(territories.get("Territory 3"));
+        territories.get("Territory 4").addAdjacentTerritory(territories.get("Territory 5"));
+        territories.get("Territory 4").addAdjacentTerritory(territories.get("Territory 10"));
 
-        // Model.Territory 7
-        territories.get("Model.Territory 7").addAdjacentTerritory(territories.get("Model.Territory 1"));
-        territories.get("Model.Territory 7").addAdjacentTerritory(territories.get("Model.Territory 8"));
-        territories.get("Model.Territory 7").addAdjacentTerritory(territories.get("Model.Territory 13"));
+        // Territory 5
+        territories.get("Territory 5").addAdjacentTerritory(territories.get("Territory 4"));
+        territories.get("Territory 5").addAdjacentTerritory(territories.get("Territory 6"));
+        territories.get("Territory 5").addAdjacentTerritory(territories.get("Territory 11"));
 
-        // Model.Territory 8
-        territories.get("Model.Territory 8").addAdjacentTerritory(territories.get("Model.Territory 2"));
-        territories.get("Model.Territory 8").addAdjacentTerritory(territories.get("Model.Territory 7"));
-        territories.get("Model.Territory 8").addAdjacentTerritory(territories.get("Model.Territory 9"));
-        territories.get("Model.Territory 8").addAdjacentTerritory(territories.get("Model.Territory 14"));
+        // Territory 6
+        territories.get("Territory 6").addAdjacentTerritory(territories.get("Territory 5"));
+        territories.get("Territory 6").addAdjacentTerritory(territories.get("Territory 12"));
 
-        // Model.Territory 9
-        territories.get("Model.Territory 9").addAdjacentTerritory(territories.get("Model.Territory 3"));
-        territories.get("Model.Territory 9").addAdjacentTerritory(territories.get("Model.Territory 8"));
-        territories.get("Model.Territory 9").addAdjacentTerritory(territories.get("Model.Territory 10"));
-        territories.get("Model.Territory 9").addAdjacentTerritory(territories.get("Model.Territory 15"));
+        // Territory 7
+        territories.get("Territory 7").addAdjacentTerritory(territories.get("Territory 1"));
+        territories.get("Territory 7").addAdjacentTerritory(territories.get("Territory 8"));
+        territories.get("Territory 7").addAdjacentTerritory(territories.get("Territory 13"));
 
-        // Model.Territory 10
-        territories.get("Model.Territory 10").addAdjacentTerritory(territories.get("Model.Territory 4"));
-        territories.get("Model.Territory 10").addAdjacentTerritory(territories.get("Model.Territory 9"));
-        territories.get("Model.Territory 10").addAdjacentTerritory(territories.get("Model.Territory 11"));
-        territories.get("Model.Territory 10").addAdjacentTerritory(territories.get("Model.Territory 16"));
+        // Territory 8
+        territories.get("Territory 8").addAdjacentTerritory(territories.get("Territory 2"));
+        territories.get("Territory 8").addAdjacentTerritory(territories.get("Territory 7"));
+        territories.get("Territory 8").addAdjacentTerritory(territories.get("Territory 9"));
+        territories.get("Territory 8").addAdjacentTerritory(territories.get("Territory 14"));
 
-        // Model.Territory 11
-        territories.get("Model.Territory 11").addAdjacentTerritory(territories.get("Model.Territory 5"));
-        territories.get("Model.Territory 11").addAdjacentTerritory(territories.get("Model.Territory 10"));
-        territories.get("Model.Territory 11").addAdjacentTerritory(territories.get("Model.Territory 12"));
-        territories.get("Model.Territory 11").addAdjacentTerritory(territories.get("Model.Territory 17"));
+        // Territory 9
+        territories.get("Territory 9").addAdjacentTerritory(territories.get("Territory 3"));
+        territories.get("Territory 9").addAdjacentTerritory(territories.get("Territory 8"));
+        territories.get("Territory 9").addAdjacentTerritory(territories.get("Territory 10"));
+        territories.get("Territory 9").addAdjacentTerritory(territories.get("Territory 15"));
 
-        // Model.Territory 12
-        territories.get("Model.Territory 12").addAdjacentTerritory(territories.get("Model.Territory 6"));
-        territories.get("Model.Territory 12").addAdjacentTerritory(territories.get("Model.Territory 11"));
-        territories.get("Model.Territory 12").addAdjacentTerritory(territories.get("Model.Territory 18"));
+        // Territory 10
+        territories.get("Territory 10").addAdjacentTerritory(territories.get("Territory 4"));
+        territories.get("Territory 10").addAdjacentTerritory(territories.get("Territory 9"));
+        territories.get("Territory 10").addAdjacentTerritory(territories.get("Territory 11"));
+        territories.get("Territory 10").addAdjacentTerritory(territories.get("Territory 16"));
 
-        // Model.Territory 13
-        territories.get("Model.Territory 13").addAdjacentTerritory(territories.get("Model.Territory 7"));
-        territories.get("Model.Territory 13").addAdjacentTerritory(territories.get("Model.Territory 14"));
-        territories.get("Model.Territory 13").addAdjacentTerritory(territories.get("Model.Territory 19"));
+        // Territory 11
+        territories.get("Territory 11").addAdjacentTerritory(territories.get("Territory 5"));
+        territories.get("Territory 11").addAdjacentTerritory(territories.get("Territory 10"));
+        territories.get("Territory 11").addAdjacentTerritory(territories.get("Territory 12"));
+        territories.get("Territory 11").addAdjacentTerritory(territories.get("Territory 17"));
 
-        // Model.Territory 14
-        territories.get("Model.Territory 14").addAdjacentTerritory(territories.get("Model.Territory 8"));
-        territories.get("Model.Territory 14").addAdjacentTerritory(territories.get("Model.Territory 13"));
-        territories.get("Model.Territory 14").addAdjacentTerritory(territories.get("Model.Territory 15"));
-        territories.get("Model.Territory 14").addAdjacentTerritory(territories.get("Model.Territory 20"));
+        // Territory 12
+        territories.get("Territory 12").addAdjacentTerritory(territories.get("Territory 6"));
+        territories.get("Territory 12").addAdjacentTerritory(territories.get("Territory 11"));
+        territories.get("Territory 12").addAdjacentTerritory(territories.get("Territory 18"));
 
-        // Model.Territory 15
-        territories.get("Model.Territory 15").addAdjacentTerritory(territories.get("Model.Territory 9"));
-        territories.get("Model.Territory 15").addAdjacentTerritory(territories.get("Model.Territory 14"));
-        territories.get("Model.Territory 15").addAdjacentTerritory(territories.get("Model.Territory 16"));
-        territories.get("Model.Territory 15").addAdjacentTerritory(territories.get("Model.Territory 21"));
+        // Territory 13
+        territories.get("Territory 13").addAdjacentTerritory(territories.get("Territory 7"));
+        territories.get("Territory 13").addAdjacentTerritory(territories.get("Territory 14"));
+        territories.get("Territory 13").addAdjacentTerritory(territories.get("Territory 19"));
 
-        // Model.Territory 16
-        territories.get("Model.Territory 16").addAdjacentTerritory(territories.get("Model.Territory 10"));
-        territories.get("Model.Territory 16").addAdjacentTerritory(territories.get("Model.Territory 15"));
-        territories.get("Model.Territory 16").addAdjacentTerritory(territories.get("Model.Territory 17"));
-        territories.get("Model.Territory 16").addAdjacentTerritory(territories.get("Model.Territory 22"));
+        // Territory 14
+        territories.get("Territory 14").addAdjacentTerritory(territories.get("Territory 8"));
+        territories.get("Territory 14").addAdjacentTerritory(territories.get("Territory 13"));
+        territories.get("Territory 14").addAdjacentTerritory(territories.get("Territory 15"));
+        territories.get("Territory 14").addAdjacentTerritory(territories.get("Territory 20"));
 
-        // Model.Territory 17
-        territories.get("Model.Territory 17").addAdjacentTerritory(territories.get("Model.Territory 11"));
-        territories.get("Model.Territory 17").addAdjacentTerritory(territories.get("Model.Territory 16"));
-        territories.get("Model.Territory 17").addAdjacentTerritory(territories.get("Model.Territory 18"));
-        territories.get("Model.Territory 17").addAdjacentTerritory(territories.get("Model.Territory 23"));
+        // Territory 15
+        territories.get("Territory 15").addAdjacentTerritory(territories.get("Territory 9"));
+        territories.get("Territory 15").addAdjacentTerritory(territories.get("Territory 14"));
+        territories.get("Territory 15").addAdjacentTerritory(territories.get("Territory 16"));
+        territories.get("Territory 15").addAdjacentTerritory(territories.get("Territory 21"));
 
-        // Model.Territory 18
-        territories.get("Model.Territory 18").addAdjacentTerritory(territories.get("Model.Territory 12"));
-        territories.get("Model.Territory 18").addAdjacentTerritory(territories.get("Model.Territory 17"));
-        territories.get("Model.Territory 18").addAdjacentTerritory(territories.get("Model.Territory 24"));
+        // Territory 16
+        territories.get("Territory 16").addAdjacentTerritory(territories.get("Territory 10"));
+        territories.get("Territory 16").addAdjacentTerritory(territories.get("Territory 15"));
+        territories.get("Territory 16").addAdjacentTerritory(territories.get("Territory 17"));
+        territories.get("Territory 16").addAdjacentTerritory(territories.get("Territory 22"));
 
-        // Model.Territory 19
-        territories.get("Model.Territory 19").addAdjacentTerritory(territories.get("Model.Territory 13"));
-        territories.get("Model.Territory 19").addAdjacentTerritory(territories.get("Model.Territory 20"));
+        // Territory 17
+        territories.get("Territory 17").addAdjacentTerritory(territories.get("Territory 11"));
+        territories.get("Territory 17").addAdjacentTerritory(territories.get("Territory 16"));
+        territories.get("Territory 17").addAdjacentTerritory(territories.get("Territory 18"));
+        territories.get("Territory 17").addAdjacentTerritory(territories.get("Territory 23"));
 
-        // Model.Territory 20
-        territories.get("Model.Territory 20").addAdjacentTerritory(territories.get("Model.Territory 14"));
-        territories.get("Model.Territory 20").addAdjacentTerritory(territories.get("Model.Territory 19"));
-        territories.get("Model.Territory 20").addAdjacentTerritory(territories.get("Model.Territory 21"));
+        // Territory 18
+        territories.get("Territory 18").addAdjacentTerritory(territories.get("Territory 12"));
+        territories.get("Territory 18").addAdjacentTerritory(territories.get("Territory 17"));
+        territories.get("Territory 18").addAdjacentTerritory(territories.get("Territory 24"));
 
-        // Model.Territory 21
-        territories.get("Model.Territory 21").addAdjacentTerritory(territories.get("Model.Territory 15"));
-        territories.get("Model.Territory 21").addAdjacentTerritory(territories.get("Model.Territory 20"));
-        territories.get("Model.Territory 21").addAdjacentTerritory(territories.get("Model.Territory 22"));
+        // Territory 19
+        territories.get("Territory 19").addAdjacentTerritory(territories.get("Territory 13"));
+        territories.get("Territory 19").addAdjacentTerritory(territories.get("Territory 20"));
 
-        // Model.Territory 22
-        territories.get("Model.Territory 22").addAdjacentTerritory(territories.get("Model.Territory 16"));
-        territories.get("Model.Territory 22").addAdjacentTerritory(territories.get("Model.Territory 21"));
-        territories.get("Model.Territory 22").addAdjacentTerritory(territories.get("Model.Territory 23"));
+        // Territory 20
+        territories.get("Territory 20").addAdjacentTerritory(territories.get("Territory 14"));
+        territories.get("Territory 20").addAdjacentTerritory(territories.get("Territory 19"));
+        territories.get("Territory 20").addAdjacentTerritory(territories.get("Territory 21"));
 
-        // Model.Territory 23
-        territories.get("Model.Territory 23").addAdjacentTerritory(territories.get("Model.Territory 17"));
-        territories.get("Model.Territory 23").addAdjacentTerritory(territories.get("Model.Territory 22"));
-        territories.get("Model.Territory 23").addAdjacentTerritory(territories.get("Model.Territory 24"));
+        // Territory 21
+        territories.get("Territory 21").addAdjacentTerritory(territories.get("Territory 15"));
+        territories.get("Territory 21").addAdjacentTerritory(territories.get("Territory 20"));
+        territories.get("Territory 21").addAdjacentTerritory(territories.get("Territory 22"));
 
-        // Model.Territory 24
-        territories.get("Model.Territory 24").addAdjacentTerritory(territories.get("Model.Territory 18"));
-        territories.get("Model.Territory 24").addAdjacentTerritory(territories.get("Model.Territory 23"));
+        // Territory 22
+        territories.get("Territory 22").addAdjacentTerritory(territories.get("Territory 16"));
+        territories.get("Territory 22").addAdjacentTerritory(territories.get("Territory 21"));
+        territories.get("Territory 22").addAdjacentTerritory(territories.get("Territory 23"));
+
+        // Territory 23
+        territories.get("Territory 23").addAdjacentTerritory(territories.get("Territory 17"));
+        territories.get("Territory 23").addAdjacentTerritory(territories.get("Territory 22"));
+        territories.get("Territory 23").addAdjacentTerritory(territories.get("Territory 24"));
+
+        // Territory 24
+        territories.get("Territory 24").addAdjacentTerritory(territories.get("Territory 18"));
+        territories.get("Territory 24").addAdjacentTerritory(territories.get("Territory 23"));
     }
 
 

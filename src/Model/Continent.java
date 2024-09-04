@@ -7,6 +7,7 @@ public class Continent {
     private final String name;
     private final List<Territory> territories;
 
+
     public Continent(String name) {
         this.name = name;
         this.territories = new ArrayList<>();
