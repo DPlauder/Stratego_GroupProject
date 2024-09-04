@@ -19,7 +19,6 @@ public class GUI {
     private boolean isFortifying;
     private boolean isDistributing;
 
-    private StartScreenDialog startScreenDialog;
 
     public GUI(Game game) {
         this.game = game;
@@ -31,8 +30,6 @@ public class GUI {
         this.isFortifying = false;
         this.isDistributing = false;
 
-        //Erweiterung Dominik
-        openStartScreenDialog();
     }
     //TODO START
     public void createAndShowGUI() {
@@ -431,11 +428,5 @@ public class GUI {
 
         JOptionPane.showMessageDialog(frame, "All bonus armies are distributed.");
     }
-    //TODO Erweiterung Dominik
-    private void openStartScreenDialog(){
-        startScreenDialog = new StartScreenDialog();
-        startScreenDialog.setSize(500, 350);
-        startScreenDialog.setLocationRelativeTo(null);
-        startScreenDialog.setVisible(true);
-    }
+
 }

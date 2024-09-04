@@ -1,0 +1,17 @@
+- Reconstruct Struktur mit Packages
+- Config, Utils added
+- Startscreen neu erstellt
+
+
+
+TODO
+
+[Main]
+    - Schleife für Spieler in Handler
+[UI]
+    -Map Fixgrößen
+
+[Startscreen]
+✔   - Abfrage StartScreen richtige Eingaben
+    - Dropdown Menü Auswahl erstellen
+    - Infos bei Ok übergeben

@@ -1,6 +1,7 @@
 import Control.Game;
 import Model.Player;
 import View.GUI;
+import View.StartScreenDialog;
 
 public class Main {
     private static final int NUM_PLAYERS = 2;
@@ -11,6 +12,7 @@ public class Main {
         for (int i = 0; i < NUM_PLAYERS; i++) {
             players[i] = new Player(PLAYER_NAMES[i]);
         }
+        StartScreenDialog startScreenDialog  = new StartScreenDialog();
 
         Game game = new Game(players);
         GUI gui = new GUI(game);
