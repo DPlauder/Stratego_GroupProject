@@ -32,7 +32,6 @@ enum GameMapType {
     }
 }
 
-
 public class Settings {
     public static int PLAYERCOUNT;
     public static List<String> PLAYERNAMES;
@@ -45,8 +44,6 @@ public class Settings {
         PLAYERNAMES = playernames;
         PLAYERCOLORS = playerColors;
         PLAYERCOUNT = playernames.size();
-
-        mapType = "BASIC";
 
         MAPTYPE = GameMapType.fromString(mapType);
         CURRENT_MAP = MAPTYPE.getMapTypeInstance();

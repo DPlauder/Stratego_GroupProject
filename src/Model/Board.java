@@ -4,9 +4,7 @@ import Model.Settings;
 import Config.MapType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Board {
     // HashMap in Liste umgebaut
@@ -21,16 +19,8 @@ public class Board {
 
         setTerritories();
         setAdjacentTerritories();
-/*
-        for (int i = 0; i < 4; i++) {
-            continents[i] = new Continent("Continent " + (i + 1));
-            for (int j = 0; j < 6; j++) {
-                Territory territory = territories.get("Territory " + (i * 6 + j + 1));
-                continents[i].addTerritory(territory);
-            }
 
-        }
- */for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             continents[i] = new Continent("Continent " + (i + 1));
             for (int j = 0; j < 6; j++) {
                 String name = "Territory " + (i * 6 + j + 1);
@@ -54,8 +44,7 @@ public class Board {
     // neu
     private void setTerritories(){
         for (int i = 0; i < mapType.getTerritoryCount(); i++) {
-            territories.add( new Territory("Territory " + (i + 1)));
-            System.out.println("Territory " + (i + 1));
+            territories.add( new Territory("territory" + (i + 1)));
         }
     }
 

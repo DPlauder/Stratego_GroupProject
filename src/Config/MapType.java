@@ -10,13 +10,10 @@ public abstract class MapType {
     public int getTerritoryCount() {
         return territories.size();
     }
-
     public List<String> getNeighbors(String territory) {
         return territories.getOrDefault(territory, List.of());
     }
-
     public abstract void initializeMap();
-
 
     public String getMapType() {
         return "Default Map Type";

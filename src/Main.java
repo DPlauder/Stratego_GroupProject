@@ -12,7 +12,6 @@ public class Main {
 
         StartScreenDialog startScreenDialog  = new StartScreenDialog();
 
-
         Game game = new Game();
         GUI gui = new GUI(game);
         javax.swing.SwingUtilities.invokeLater(gui::createAndShowGUI);

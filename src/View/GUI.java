@@ -173,9 +173,9 @@ public class GUI {
         for (int group = 0; group <4; group++){
             int groupX = startX + (group % 2) * (6 *(padding ) + groupSpacing + (padding *2 ));
             int groupY = startY + (group / 2) * (3 * (padding) + groupSpacing);
-/*
+
             for (int i = 0; i < 6; i++) {
-                Territory territory = game.getBoard().getTerritories().values().stream()
+                Territory territory = game.getBoard().getTerritories().stream()
                         .skip(territoryIndex++)
                         .findFirst()
                         .orElse(null);
@@ -200,7 +200,7 @@ public class GUI {
 
             }
 
- */
+
         }
         statusLabel.setText("Current Model.Player: " + game.getCurrentPlayer().getName() +
                 " | Territories: " + currentPlayer.getTerritories().size() + " | Armies: " + currentPlayer.getArmyCount() +

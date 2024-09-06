@@ -50,9 +50,8 @@ public class Territory {
     }
 
     public void addAdjacentTerritory(Territory territory) {
-        if (!adjacentTerritories.contains(territory)) {
-            adjacentTerritories.add(territory);
-        }
+        adjacentTerritories.add(territory);
+
     }
     public void setNeighbours(List<Territory> territories){
         for(Territory territory : territories){

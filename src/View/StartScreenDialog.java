@@ -271,11 +271,7 @@ public class StartScreenDialog extends JDialog {
     //TODO MapType
     private void initComboBoxMapTypes(){
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(Config.MAPTYPES);
-
-
         comboMapVersion.setModel(model);
-
-        // Optionally set a default selection, e.g., the first item
         comboMapVersion.setSelectedIndex(0);
     }
 

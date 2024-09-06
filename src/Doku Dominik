@@ -10,21 +10,37 @@ TODO
 ✔   - Schleife für Spieler in Handler auslagern
 [UI]
     -Map Fixgrößen
+    -MapTypen Oberfläche
+
 [Settings]
 ✔   - globale Settings von StartScreen befüllt
 ✔   - enum für KartenTyp
-    - enum updaten mit Switch for MapTypeClasse
-    - enum umbenennen um Fehler zu Klasse MapType zu verhindern
+✔   - enum updaten mit Switch for MapTypeClasse
+✔   - enum umbenennen um Fehler zu Klasse MapType zu verhindern
 
 [Startscreen]
 ✔   - Abfrage StartScreen richtige Eingaben
-    - Dropdown Menü Auswahl erstellen
-    - Infos bei Ok übergeben
+✔   - Dropdown Menü Auswahl erstellen
+✔   - Infos bei Ok übergeben
 
-[MapTypeOne]
-✔   -Nachbarn erstellt
+[MapType]
+✔   - Nachbarn erstellt
+    - mehr Karten erstellen
+    - Kontinente dazufügen
+
 
 [Game]
+    - Anzahl Armeen je Spieleranzahl
+    - neutrale Gebiete
+    - gebiete können aufgegeben werden
+    - mehr KartenTypen eintauschen Regeln
+    - Gewinnbedingungen
+
 
 [Board]
-    -setAdjacentTerritories() angepasst
+✔   -setAdjacentTerritories() angepasst
+    - Kontinente erstellen
+
+[Card]
+    - unterschiedliche Typen dazufügen
+    - Kartenwerte anpassen
