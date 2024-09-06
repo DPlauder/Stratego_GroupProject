@@ -63,22 +63,24 @@ public class StartScreenDialog extends JDialog {
         initPlayerColorsStart();
         initColorsSelector();
         initNumberRadioButtons();
+        initComboBoxMapTypes();
 
         setTwoPlayerInfos();
         setSize(500, 350);
         setLocationRelativeTo(null);
         setVisible(true);
 
+    }
 
-
-
+    public Settings getSettings(){
+        return settings;
     }
 
     //TODO OK
     private void onOK() {
         checkPlayerNames();
+        mapType = (String)comboMapVersion.getSelectedItem();
 
-        // Validate that all players have selected a color
         if (!validatePlayerColors()) {
             JOptionPane.showMessageDialog(this,
                     "Each player must select a unique color.",
@@ -86,6 +88,7 @@ public class StartScreenDialog extends JDialog {
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
+        System.out.println(mapType);
         settings = new Settings(playerNames, playerColors, mapType);
         dispose();
     }
@@ -239,9 +242,8 @@ public class StartScreenDialog extends JDialog {
         label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
     }
 
-    // Update the resetHighlight method
     private void resetHighlight(JLabel label) {
-        // Reapply the same empty border instead of removing the border entirely
+
         label.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
     }
 
@@ -266,8 +268,16 @@ public class StartScreenDialog extends JDialog {
             }
         }
     }
-
     //TODO MapType
+    private void initComboBoxMapTypes(){
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(Config.MAPTYPES);
+
+
+        comboMapVersion.setModel(model);
+
+        // Optionally set a default selection, e.g., the first item
+        comboMapVersion.setSelectedIndex(0);
+    }
 
 }
 

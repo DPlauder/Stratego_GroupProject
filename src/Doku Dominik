@@ -1,17 +1,30 @@
 - Reconstruct Struktur mit Packages
 - Config, Utils added
 - Startscreen neu erstellt
-
+- MapTypeOne erstellt
 
 
 TODO
 
 [Main]
-    - Schleife für Spieler in Handler
+✔   - Schleife für Spieler in Handler auslagern
 [UI]
     -Map Fixgrößen
+[Settings]
+✔   - globale Settings von StartScreen befüllt
+✔   - enum für KartenTyp
+    - enum updaten mit Switch for MapTypeClasse
+    - enum umbenennen um Fehler zu Klasse MapType zu verhindern
 
 [Startscreen]
 ✔   - Abfrage StartScreen richtige Eingaben
     - Dropdown Menü Auswahl erstellen
     - Infos bei Ok übergeben
+
+[MapTypeOne]
+✔   -Nachbarn erstellt
+
+[Game]
+
+[Board]
+    -setAdjacentTerritories() angepasst

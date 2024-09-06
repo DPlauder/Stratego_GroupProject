@@ -4,13 +4,19 @@ import java.awt.Color;
 
 public class Utils {
     public static Color stringToColor(String colorStr) {
-        return switch (colorStr.toLowerCase()) {
-            case "red" -> Color.RED;
-            case "blue" -> Color.BLUE;
-            case "black" -> Color.BLACK;
-            case "yellow" -> Color.YELLOW;
-            case "green" -> Color.GREEN;
-            default -> Color.GRAY;
-        };
+        switch (colorStr.toLowerCase()) {
+            case "red":
+                return Color.RED;
+            case "blue":
+                return Color.BLUE;
+            case "black":
+                return Color.BLACK;
+            case "yellow":
+                return Color.YELLOW;
+            case "green":
+                return Color.GREEN;
+            default:
+                return Color.GRAY;
+        }
     }
 }

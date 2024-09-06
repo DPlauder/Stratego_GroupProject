@@ -54,5 +54,9 @@ public class Territory {
             adjacentTerritories.add(territory);
         }
     }
-
+    public void setNeighbours(List<Territory> territories){
+        for(Territory territory : territories){
+            addAdjacentTerritory(territory);
+        }
+    }
 }

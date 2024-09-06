@@ -1,5 +1,3 @@
-
-
 package Control;
 
 import Model.*;
@@ -7,15 +5,14 @@ import java.util.*;
 
 public class Game {
     private final Board board;
-    private final Player[] players;
+    private Player[] players;
     private int currentPlayerIndex;
     private final Random random;
     private final Map<Player, List<Card>> playerCards;
     private boolean isDistributing;
     private int armiesToDistribute;
 
-    public Game(Player[] players) {
-        this.players = players;
+    public Game() {
         this.board = new Board();
         this.currentPlayerIndex = 0;
         this.random = new Random();
@@ -23,6 +20,8 @@ public class Game {
        // Scanner scanner = new Scanner(System.in);
         this.isDistributing = false;
         this.armiesToDistribute = 16;
+        //ersetzt die Übergabe von players
+        setPlayer();
         initializeGame();
     }
 
@@ -30,7 +29,7 @@ public class Game {
         for (Player player : players) {
             playerCards.put(player, new ArrayList<>());
         }
-        List<Territory> allTerritories = new ArrayList<>(board.getTerritories().values());
+        List<Territory> allTerritories = new ArrayList<>(board.getTerritories());
         Collections.shuffle(allTerritories);
 
         for (int i = 0; i < allTerritories.size(); i++) {
@@ -47,6 +46,13 @@ public class Game {
             allCards.add(new Card("Infantry"));
         }
         Collections.shuffle(allCards);
+    }
+    //aus Main importiert und angepasst
+    private void setPlayer(){
+        players = new Player[Settings.PLAYERCOUNT];
+        for (int i = 0; i < Settings.PLAYERCOUNT; i++) {
+            players[i] = new Player(Settings.PLAYERNAMES.get(i));
+        }
     }
 
     public Player[] getPlayers() {
@@ -106,7 +112,8 @@ public void setCurrentPlayer(){
     currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
 }
     public boolean checkWinCondition() {
-        for (Territory territory : board.getTerritories().values()) {
+        //angepasst
+        for (Territory territory : board.getTerritories()) {
             if (territory.getOwner() != getCurrentPlayer()) {
                 return false;
             }
