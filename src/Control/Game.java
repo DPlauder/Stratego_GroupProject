@@ -12,6 +12,14 @@ public class Game {
     private boolean isDistributing;
     private int armiesToDistribute;
 
+    // dazugefügt
+    // PHASES
+    // 1 = Reinforcment
+    // 2 = Attack
+    // 3 = Movement
+    // 4 = Game over
+    public int gamePhase;
+
     public Game() {
         this.board = new Board();
         this.currentPlayerIndex = 0;
@@ -26,9 +34,12 @@ public class Game {
     }
 
     private void initializeGame() {
+        this.gamePhase = 1;
+
         for (Player player : players) {
             playerCards.put(player, new ArrayList<>());
         }
+
         List<Territory> allTerritories = new ArrayList<>(board.getTerritories());
         Collections.shuffle(allTerritories);
 
@@ -58,7 +69,24 @@ public class Game {
     public Player[] getPlayers() {
         return players;
     }
+    // dazugefügt
+    public int getGamePhase(){
+        return  this.gamePhase;
+    }
+    public void setReinformentPhase(){
+        this.gamePhase = 1;
+    }
+    public void setAttackPhase(){
+        this.gamePhase = 2;
+    }
+    public void setMovementPhase(){
+        this.gamePhase = 3;
+    }
+    public void setGameEndPhase(){
+        this.gamePhase = 4;
+    }
 
+    //wird benutzt in GUI createAndShow
     public boolean isDistributing() {
         return isDistributing;
     }

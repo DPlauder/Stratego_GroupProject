@@ -43,6 +43,7 @@ public class GUI {
         frame.add(boardPanel, BorderLayout.CENTER);
         frame.add(statusLabel, BorderLayout.SOUTH);
 
+        //TODO NEXT TURN BTN
         JButton nextTurnButton = new JButton("Next Turn");
         nextTurnButton.addActionListener(new ActionListener() {
             @Override
@@ -60,10 +61,10 @@ public class GUI {
                 }
             }
         });
-
         JPanel controlPanel = new JPanel();
         controlPanel.add(nextTurnButton);
 
+        //TODO Fortify Btn
         JButton fortifyButton = new JButton("Fortify");
         fortifyButton.addActionListener(new ActionListener() {
             @Override
@@ -76,6 +77,7 @@ public class GUI {
         });
         controlPanel.add(fortifyButton);
 
+        //TODO Dist Btn
         JButton distributeButton = new JButton("Distribute Armies");
         distributeButton.addActionListener(new ActionListener() {
             @Override
@@ -96,6 +98,7 @@ public class GUI {
         });
         controlPanel.add(distributeButton);
 
+        //TODO Cards Btn
         JButton useCardButton = new JButton("Use Cards");
         useCardButton.addActionListener(new ActionListener() {
             @Override
