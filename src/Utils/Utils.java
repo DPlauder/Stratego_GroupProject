@@ -15,6 +15,8 @@ public class Utils {
                 return Color.YELLOW;
             case "green":
                 return Color.GREEN;
+            case "magenta":
+                return Color.MAGENTA;
             default:
                 return Color.GRAY;
         }

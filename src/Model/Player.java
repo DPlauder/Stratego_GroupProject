@@ -1,5 +1,6 @@
 package Model;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,12 +10,15 @@ public class Player {
     private final List<Territory> territories;
     private int armyCount;
     private List<Card> cards;
+    //dazugefügt
+    private Color color;
 
-    public Player(String name) {
+    public Player(String name, Color color, int startArmy) {
         this.name = name;
         this.territories = new ArrayList<>();
-        this.armyCount = 0;
+        this.armyCount = startArmy;
         this.cards = new ArrayList<>();
+        this.color = color;
     }
 
     public String getName() {
@@ -57,5 +61,9 @@ public class Player {
 
     public boolean controlsContinent(Continent continent) {
         return new HashSet<>(territories).containsAll(continent.getTerritories());
+    }
+
+    public Color getColor(){
+        return this.color;
     }
 }

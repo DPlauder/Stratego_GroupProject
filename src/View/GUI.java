@@ -19,12 +19,11 @@ public class GUI {
     private boolean isFortifying;
     private boolean isDistributing;
 
-
     public GUI(Game game) {
         this.game = game;
         this.frame = new JFrame("Risiko");
         this.boardPanel = new JPanel();
-        this.statusLabel = new JLabel("Current Model.Player: ");
+        this.statusLabel = new JLabel("Current Player: ");
         this.selectedFrom = null;
         this.selectedTo = null;
         this.isFortifying = false;
@@ -38,44 +37,60 @@ public class GUI {
         frame.setLayout(new BorderLayout());
 
         boardPanel.setLayout(new GridLayout(4, 6));
+        updateStatusLabel();
         updateBoard();
 
         frame.add(boardPanel, BorderLayout.CENTER);
         frame.add(statusLabel, BorderLayout.SOUTH);
-
-        //TODO NEXT TURN BTN
-        JButton nextTurnButton = new JButton("Next Turn");
-        nextTurnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (game.isDistributing()) {
-                    JOptionPane.showMessageDialog(frame, "Distributing phase is not finished yet.");
-                } else {
-                    game.nextTurn();
-                    System.out.println("Current Player after turn: " + game.getCurrentPlayer().getName());
-                    if (game.checkWinCondition()) {
-                        JOptionPane.showMessageDialog(frame, "Player " + game.getCurrentPlayer().getName() + " wins!");
-                        System.exit(0);
-                    }
-                    updateBoard();
-                }
-            }
-        });
         JPanel controlPanel = new JPanel();
-        controlPanel.add(nextTurnButton);
+        //TODO NEXT TURN BTN
+
+            JButton nextTurnButton = new JButton("Next Turn");
+            nextTurnButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateStatusLabel();
+                    // gamephases dazugefügt
+                    if(game.getGamePhase() == 0 && game.getArmiesToDistribute() == 0){
+                        System.out.println(game.getCurrentPlayer().getArmyCount());
+                        game.setNextGamePhase();
+                    }
+                    else if(game.getGamePhase() == 1){
+                        game.setNextGamePhase();
+                    }
+                    else if(game.getGamePhase() == 2){
+                        game.setNextGamePhase();
+                        game.setCurrentPlayer();
+                    }
+                    else if (game.isDistributing()) {
+                        JOptionPane.showMessageDialog(frame, "Distributing phase is not finished yet.");
+                    } else {
+                        //game.nextTurn();
+                        System.out.println("hello else");
+                        //System.out.println("Current Player after turn: " + game.getCurrentPlayer().getName());
+                        if (game.checkWinCondition()) {
+                            JOptionPane.showMessageDialog(frame, "Player " + game.getCurrentPlayer().getName() + " wins!");
+                            System.exit(0);
+                        }
+                        updateBoard();
+                    }
+                }
+            });
+            controlPanel.add(nextTurnButton);
 
         //TODO Fortify Btn
-        JButton fortifyButton = new JButton("Fortify");
-        fortifyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                isFortifying = !isFortifying;
-                fortifyButton.setText(isFortifying ? "Attack" : "Fortify");
-                statusLabel.setText("Current Model.Player: " + game.getCurrentPlayer().getName() + " (Fortify Mode: " + isFortifying + ")");
-                isDistributing = false;
-            }
-        });
-        controlPanel.add(fortifyButton);
+            JButton fortifyButton = new JButton("Fortify");
+            fortifyButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    isFortifying = !isFortifying;
+                    fortifyButton.setText(isFortifying ? "Attack" : "Fortify");
+                    statusLabel.setText("Current Player: " + game.getCurrentPlayer().getName() + " (Fortify Mode: " + isFortifying + ")");
+                    isDistributing = false;
+                }
+            });
+            controlPanel.add(fortifyButton);
+
 
         //TODO Dist Btn
         JButton distributeButton = new JButton("Distribute Armies");
@@ -86,12 +101,11 @@ public class GUI {
                     game.startDistributingArmies();
                     isDistributing = true;
                     distributeButton.setText("Done");
-                    statusLabel.setText("Current Model.Player: " + game.getCurrentPlayer().getName() + " (Distribute Mode: " + isDistributing + ")");
-                    distributeInitialArmies();
+                    //statusLabel.setText("Current Player: " + game.getCurrentPlayer().getName() + " (Distribute Mode: " + isDistributing + ")");
                 } else {
                     isDistributing = false;
                     distributeButton.setText("Distribute Armies");
-                    statusLabel.setText("Current Model.Player: " + game.getCurrentPlayer().getName());
+                    statusLabel.setText("Current Player: " + game.getCurrentPlayer().getName());
                     updateBoard();
                 }
             }
@@ -112,51 +126,6 @@ public class GUI {
         frame.setVisible(true);
     }
 
-    private void distributeInitialArmies() {
-        int remainingArmies = 16;
-        Player[] players = game.getPlayers();
-        int currentPlayerIndex = 0;
-
-        while (remainingArmies > 0) {
-            Player player = game.getCurrentPlayer();
-            Territory selectedTerritory = (Territory) JOptionPane.showInputDialog(
-                    frame,
-                     player.getName() + ", select a territory to place armies:",
-                    "Distribute Armies",
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    player.getTerritories().toArray(),
-                    player.getTerritories().get(0)
-            );
-
-            if (selectedTerritory != null) {
-                int armiesToPlace = Integer.parseInt(JOptionPane.showInputDialog(
-                        frame,
-                        "Enter number of armies to place (1-" + remainingArmies + "):"
-                ));
-
-                if (armiesToPlace >= 1 && armiesToPlace <= remainingArmies) {
-                    System.out.println(player.getName() + currentPlayerIndex);
-                    boolean success = game.distributeArmy(selectedTerritory, armiesToPlace);
-                    if (success) {
-                        remainingArmies -= armiesToPlace;
-                        JOptionPane.showMessageDialog(frame, "You placed " + armiesToPlace + " armies at " + selectedTerritory.getName());
-                        updateBoard();
-                    } else {
-                        JOptionPane.showMessageDialog(frame, "Failed to place armies. Try again.");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Invalid number of armies. Must be between 1 and " + remainingArmies + ".");
-                }
-            }
-            //currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
-            game.setCurrentPlayer();
-        }
-
-        JOptionPane.showMessageDialog(frame, "All armies are distributed. The game begins now!");
-        updateBoard();
-        isFortifying = false;
-    }
 
     private void updateBoard() {
         boardPanel.removeAll();
@@ -171,7 +140,6 @@ public class GUI {
         int startX = 20;
         int startY = 20;
 
-        Player currentPlayer = game.getCurrentPlayer();
         int territoryIndex = 0;
         for (int group = 0; group <4; group++){
             int groupX = startX + (group % 2) * (6 *(padding ) + groupSpacing + (padding *2 ));
@@ -186,9 +154,13 @@ public class GUI {
                 if (territory == null) {
                     continue;
                 }
-
                 JButton button = new JButton(territory.getName() + " (" + territory.getArmyCount() + ")");
-                button.setBackground(territory.getOwner() == currentPlayer ? Color.GREEN : Color.RED);
+
+                if (territory.getOwner() != null) {
+                    button.setBackground(territory.getOwner().getColor());
+                } else {
+                    button.setBackground(Color.GRAY);  // Set background to gray if no owner
+                }
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -202,30 +174,38 @@ public class GUI {
                 boardPanel.add(button);
 
             }
-
-
         }
-        statusLabel.setText("Current Model.Player: " + game.getCurrentPlayer().getName() +
-                " | Territories: " + currentPlayer.getTerritories().size() + " | Armies: " + currentPlayer.getArmyCount() +
-                " | Cards: " + currentPlayer.getCards().size());
-        boardPanel.revalidate();
         boardPanel.repaint();
     }
-
+    //ausgelagert aus updateBoard
+    private void updateStatusLabel(){
+        this.statusLabel.setText("Player: " + game.getCurrentPlayer().getName() +
+                " | Territories: " + game.getCurrentPlayer().getTerritories().size() + " | Armies: " + game.getCurrentPlayer().getArmyCount() +
+                " | Cards: " + game.getCurrentPlayer().getCards().size() + " | Phase " + game.getGamePhase());
+    }
+    //TODO Handler Territory
     private void handleTerritoryClick(Territory clickedTerritory) {
         if (clickedTerritory == null) {
             JOptionPane.showMessageDialog(frame, "Fehler: Das ausgewählte Territorium existiert nicht.");
             return;
         }
-        if (isDistributing) {
-            return;
-        }
+        if(game.getGamePhase() == 0){
 
+        }
+        else if(game.getGamePhase() == 1){
+
+        }
+        else if(game.getGamePhase() == 2){
+
+        }
+        else if(game.getGamePhase() == 5){
+
+        }
         if (isFortifying) {
             if (selectedFrom == null) {
                 if (clickedTerritory.getOwner() == game.getCurrentPlayer()) {
                     selectedFrom = clickedTerritory;
-                    JOptionPane.showMessageDialog(frame, "Model.Territory selected for fortification: " + selectedFrom.getName() + ". Now select the target territory.");
+                    JOptionPane.showMessageDialog(frame, "Territory selected for fortification: " + selectedFrom.getName() + ". Now select the target territory.");
                 } else {
                     JOptionPane.showMessageDialog(frame, "You must select a territory that you own.");
                 }
@@ -250,7 +230,7 @@ public class GUI {
             if (selectedFrom == null) {
                 if (clickedTerritory.getOwner() == game.getCurrentPlayer()) {
                     selectedFrom = clickedTerritory;
-                    JOptionPane.showMessageDialog(frame, "Model.Territory selected for attack: " + selectedFrom.getName() + ". Now select the target territory.");
+                    JOptionPane.showMessageDialog(frame, "Territory selected for attack: " + selectedFrom.getName() + ". Now select the target territory.");
                 } else {
                     JOptionPane.showMessageDialog(frame, "You must select a territory that you own.");
                 }
@@ -273,7 +253,7 @@ public class GUI {
                     handleAttackPhase();
 
                     if (selectedTo.getArmyCount() == 0) {
-                        JOptionPane.showMessageDialog(frame, "Model.Territory conquered! You receive a card.");
+                        JOptionPane.showMessageDialog(frame, "Territory conquered! You receive a card.");
                         game.getCurrentPlayer().addTerritory(selectedTo);
                         game.getCurrentPlayer().addCard(new Card("Infantry"));
                     }
@@ -328,7 +308,7 @@ public class GUI {
                 diceFrame.dispose();
                 game.nextTurn();
                 if (game.checkWinCondition()) {
-                    JOptionPane.showMessageDialog(frame, "Model.Player " + game.getCurrentPlayer().getName() + " wins!");
+                    JOptionPane.showMessageDialog(frame, "Player " + game.getCurrentPlayer().getName() + " wins!");
                     System.exit(0);
                 }
                 updateBoard();
@@ -385,7 +365,7 @@ public class GUI {
         if (selectedTo.getArmyCount() == 0) {
             game.getCurrentPlayer().addTerritory(selectedTo);
             game.getCurrentPlayer().addCard(new Card("Infantry"));
-            result.append("Model.Territory conquered! ").append(selectedTo.getName()).append(" is now owned by ").append(game.getCurrentPlayer().getName()).append(".");
+            result.append("Territory conquered! ").append(selectedTo.getName()).append(" is now owned by ").append(game.getCurrentPlayer().getName()).append(".");
         }
 
         return result.toString();
