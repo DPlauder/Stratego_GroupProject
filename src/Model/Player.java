@@ -13,10 +13,10 @@ public class Player {
     //dazugefügt
     private Color color;
 
-    public Player(String name, Color color, int startArmy) {
+    public Player(String name, Color color, int army) {
         this.name = name;
         this.territories = new ArrayList<>();
-        this.armyCount = startArmy;
+        this.armyCount = army;
         this.cards = new ArrayList<>();
         this.color = color;
     }

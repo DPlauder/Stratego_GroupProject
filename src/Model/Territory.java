@@ -49,10 +49,12 @@ public class Territory {
         return adjacentTerritories;
     }
 
+    //drinnen gelassen für Anpassungen
     public void addAdjacentTerritory(Territory territory) {
         adjacentTerritories.add(territory);
 
     }
+    //erstellt für Nachbarn
     public void setNeighbours(List<Territory> territories){
         for(Territory territory : territories){
             addAdjacentTerritory(territory);

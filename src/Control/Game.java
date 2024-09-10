@@ -80,9 +80,14 @@ public class Game {
                 break;
             case Gamephase.FORTIFY:
                 gamePhase = Gamephase.REINFORCEMENT;
+                reinforcePhase();
                 break;
             case Gamephase.DISTRIBUTION_TERRITORIES:
                 gamePhase = Gamephase.DISTRIBUTION_ARMIES;
+                break;
+            case Gamephase.DISTRIBUTION_ARMIES:
+                gamePhase = Gamephase.REINFORCEMENT;
+                reinforcePhase();
                 break;
             default:
                 break;
@@ -104,20 +109,16 @@ public class Game {
     public void removeOneArmyToDistribute(){
         this.armiesToDistribute--;
     }
+    /*
     public void startDistributingArmies() {
         isDistributing = true;
         armiesToDistribute = 16;
     }
+    */
 
     //TODO Reinforcement Phase
     public void reinforcePhase() {
         int reinforcements = Math.max(3, currentPlayer.getTerritories().size() / 3);
-
-        for (Continent continent : board.getContinents()) {
-            if (currentPlayer.controlsContinent(continent)) {
-                reinforcements += 3;
-            }
-        }
         currentPlayer.addArmies(reinforcements);
         System.out.println(currentPlayer.getName() + " receives " + reinforcements + " reinforcement armies.");
     }
@@ -153,7 +154,6 @@ public class Game {
         }
         territory.addArmies(armies);
         armiesToDistribute -= armies;
-
         if (armiesToDistribute <= 0) {
             isDistributing = false;
             return true;
@@ -169,21 +169,20 @@ public class Game {
         return this.currentPlayer;
     }
 
-    //TODO Next Turn
     public void nextTurn() {
-        if (!isDistributing) {
-            reinforcePhase();
-            cardReinforcementPhase();
-            attackPhase();
-            fortifyPhase();
-            setCurrentPlayer();
-            checkGameOver();
-        }
+        checkGameOver();
+        setCurrentPlayer();
+        setNextGamePhase();
+
+
     }
+    //TODO Next Turn
 public void setCurrentPlayer(){
     this.currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
     // dazugefügt
     this.currentPlayer = players[currentPlayerIndex];
+
+
 }
 public boolean checkWinCondition() {
     for (Territory territory : board.getTerritories()) {
@@ -196,29 +195,7 @@ public boolean checkWinCondition() {
 
 
     //TODO ATTACK Phase
-    private void attackPhase() {
 
-
-        boolean territoryConquered = false;
-        for (Territory from : currentPlayer.getTerritories()) {
-            for (Territory to : from.getAdjacentTerritories()) {
-                if (to.getOwner() != currentPlayer) {
-                    int attackArmies = Math.min(3, from.getArmyCount() - 1);
-                    int defendArmies = Math.min(2, to.getArmyCount());
-                    attackTerritory(from, to, attackArmies, defendArmies);
-                    territoryConquered = true;
-                    break;
-                }
-            }
-            if (territoryConquered) break;
-        }
-        if (territoryConquered) {
-            playerCards.get(currentPlayer).add(new Card("Infantry"));
-            if (playerCards.get(currentPlayer).size() > 5) {
-                cardReinforcementPhase();
-            }
-        }
-    }
     public void attackTerritory(Territory from, Territory to, int attackArmies, int defendArmies) {
         if (from.getOwner() == getCurrentPlayer() && to.getOwner() != getCurrentPlayer()) {
             int[] attackDice = rollDice(attackArmies);
@@ -248,7 +225,7 @@ public boolean checkWinCondition() {
         }
     }
 
-    private void fortifyPhase() {
+    private void fortifyPhase(){
         for (Territory from : currentPlayer.getTerritories()) {
             for (Territory to : from.getAdjacentTerritories()) {
                 if (to.getOwner() == currentPlayer && from != to) {

@@ -2,7 +2,9 @@
 - Config, Utils added
 - Startscreen neu erstellt
 - MapTypeOne erstellt
-
+- Enum für GamePhases erstellt
+- AttackDialog erstellt für AttackPhase
+- Settings erstellt
 
 TODO
 
@@ -11,6 +13,8 @@ TODO
 [UI]
     -Map Fixgrößen
     -MapTypen Oberfläche
+    -Abfrage für benachbarte Gebiete einbauen
+✔    -AttackDialog eingefügt
 
 [Settings]
 ✔   - globale Settings von StartScreen befüllt
@@ -30,8 +34,8 @@ TODO
 
 
 [Game]
-    - Spielphasen einfügen
-    - Anzahl Armeen je Spieleranzahl
+✔    - Spielphasen einfügen
+✔    - Anzahl Armeen je Spieleranzahl
     - neutrale Gebiete
     - gebiete können aufgegeben werden
     - mehr KartenTypen eintauschen Regeln
