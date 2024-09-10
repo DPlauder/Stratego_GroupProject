@@ -20,7 +20,7 @@ enum GameMapType {
     }
 
     public int getValue() {
-        return value;
+        return this.value;
     }
     public MapType getMapTypeInstance() {
         return mapTypeInstance;

@@ -1,4 +1,5 @@
 package View;
+import Config.Gamephase;
 import Control.Game;
 import Model.*;
 
@@ -51,14 +52,14 @@ public class GUI {
                 public void actionPerformed(ActionEvent e) {
                     updateStatusLabel();
                     // gamephases dazugefügt
-                    if(game.getGamePhase() == 0 && game.getArmiesToDistribute() == 0){
+                    if(game.getGamePhase() == Gamephase.REINFORCEMENT && game.getArmiesToDistribute() == 0){
                         System.out.println(game.getCurrentPlayer().getArmyCount());
                         game.setNextGamePhase();
                     }
-                    else if(game.getGamePhase() == 1){
+                    else if(game.getGamePhase() == Gamephase.ATTACK){
                         game.setNextGamePhase();
                     }
-                    else if(game.getGamePhase() == 2){
+                    else if(game.getGamePhase() == Gamephase.FORTIFY){
                         game.setNextGamePhase();
                         game.setCurrentPlayer();
                     }
@@ -175,6 +176,7 @@ public class GUI {
 
             }
         }
+        updateStatusLabel();
         boardPanel.repaint();
     }
     //ausgelagert aus updateBoard
@@ -189,18 +191,33 @@ public class GUI {
             JOptionPane.showMessageDialog(frame, "Fehler: Das ausgewählte Territorium existiert nicht.");
             return;
         }
-        if(game.getGamePhase() == 0){
+        if(game.getGamePhase() == Gamephase.REINFORCEMENT){
 
         }
-        else if(game.getGamePhase() == 1){
+        else if(game.getGamePhase() == Gamephase.ATTACK){
 
         }
-        else if(game.getGamePhase() == 2){
+        else if(game.getGamePhase() == Gamephase.FORTIFY){
 
         }
-        else if(game.getGamePhase() == 5){
+        else if(game.getGamePhase() == Gamephase.DISTRIBUTION_TERRITORIES){
+            if(game.getArmiesToDistribute() > 0){
+                handleDistributeTerritory(clickedTerritory);
+                System.out.println(game.getArmiesToDistribute());
+            }
+            updateBoard();
+        }
+        else if(game.getGamePhase() == Gamephase.DISTRIBUTION_ARMIES){
+            if(game.getCurrentPlayer() != clickedTerritory.getOwner()){
+
+            }
+            if(game.getArmiesToDistribute() > 0){
+                handleDistributeArmy(clickedTerritory);
+            }
+            updateBoard();
 
         }
+/*
         if (isFortifying) {
             if (selectedFrom == null) {
                 if (clickedTerritory.getOwner() == game.getCurrentPlayer()) {
@@ -266,6 +283,7 @@ public class GUI {
                 }
             }
         }
+    */
     }
 
     private void useCards() {
@@ -289,7 +307,42 @@ public class GUI {
             updateBoard();
         }
     }
+    private void handleDistributeTerritory(Territory territory){
+        if(territory.getOwner() != null){
+            JOptionPane.showMessageDialog(frame, "Gebiet ist schon vergeben");
+        }
+        else{
+            game.getCurrentPlayer().addTerritory(territory);
+            territory.setOwner(game.getCurrentPlayer());
+            territory.addArmies(1);
+            game.getCurrentPlayer().removeArmies(1);
+            game.removeOneArmyToDistribute();
+            game.setCurrentPlayer();
+            //FIXME LAMDA BENUTZT WEGEN JAVA VERSION!!!!
+            if(game.getBoard().getTerritories().stream().allMatch(tempTerritory -> tempTerritory.getOwner() != null )){
+                System.out.println("hello end Dist Territory");
+                game.setNextGamePhase();
 
+            };
+        }
+    }
+    private void handleDistributeArmy(Territory territory){
+        if(territory.getOwner() != game.getCurrentPlayer()){
+            JOptionPane.showMessageDialog(frame, "Gebiet ist gehört nicht dir");
+        }
+        else{
+            territory.addArmies(1);
+            game.getCurrentPlayer().removeArmies(1);
+            game.setCurrentPlayer();
+            game.removeOneArmyToDistribute();
+            if(game.getArmiesToDistribute() == 0){
+                game.setNextGamePhase();
+                updateBoard();
+                JOptionPane.showMessageDialog(frame, "Alle Einheiten gesetzt");
+            }
+        }
+
+    }
     private void handleAttackPhase() {
         String diceResult = rollDiceResult();
 

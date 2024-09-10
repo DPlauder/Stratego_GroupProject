@@ -1,5 +1,6 @@
 package Control;
 
+import Config.Gamephase;
 import Model.*;
 import java.util.*;
 
@@ -14,6 +15,8 @@ public class Game {
     // dazu weil öfters verwendet;
     private Player currentPlayer;
 
+
+
     // dazugefügt
     // PHASES
     // 0 = Reinforcement
@@ -21,7 +24,7 @@ public class Game {
     // 2 = Movement
     // 3 = Game over
     // 5 = Distribution
-    private int gamePhase;
+    private Gamephase gamePhase;
 
     public Game() {
         this.board = new Board();
@@ -37,10 +40,11 @@ public class Game {
     }
 
     private void initializeGame() {
-        this.gamePhase = 5;
+        this.gamePhase = Gamephase.DISTRIBUTION_TERRITORIES;
         for (Player player : players) {
             playerCards.put(player, new ArrayList<>());
         }
+        this.currentPlayer = players[this.currentPlayerIndex];
         List<Territory> allTerritories = new ArrayList<>(board.getTerritories());
 
         //Territorien Zuweisungen rausgenommen
@@ -63,14 +67,30 @@ public class Game {
         return players;
     }
     // dazugefügt
-    public int getGamePhase(){
+    public Gamephase getGamePhase(){
         return  this.gamePhase;
     }
     public void setNextGamePhase(){
-        this.gamePhase = (this.gamePhase + 1) % 3;
+        switch (gamePhase){
+            case Gamephase.REINFORCEMENT:
+                gamePhase = Gamephase.ATTACK;
+                break;
+            case Gamephase.ATTACK:
+                gamePhase = Gamephase.FORTIFY;
+                break;
+            case Gamephase.FORTIFY:
+                gamePhase = Gamephase.REINFORCEMENT;
+                break;
+            case Gamephase.DISTRIBUTION_TERRITORIES:
+                gamePhase = Gamephase.DISTRIBUTION_ARMIES;
+                break;
+            default:
+                break;
+
+        }
     }
     public void setGameEndPhase(){
-        this.gamePhase = 4;
+        this.gamePhase = Gamephase.GAME_OVER;
     }
 
     //wird benutzt in GUI createAndShow
@@ -80,6 +100,9 @@ public class Game {
 
     public int getArmiesToDistribute(){
         return this.armiesToDistribute;
+    }
+    public void removeOneArmyToDistribute(){
+        this.armiesToDistribute--;
     }
     public void startDistributingArmies() {
         isDistributing = true;
@@ -112,7 +135,7 @@ public class Game {
     }
     public void initDistributeArmies(){
         for(Player player : players){
-            player.addArmies(16);
+            player.addArmies(Settings.STARTARMY);
         }
     }
     //TODO Distribution
@@ -135,7 +158,6 @@ public class Game {
             isDistributing = false;
             return true;
         }
-
         return true;
     }
 
@@ -144,7 +166,7 @@ public class Game {
     }
 
     public Player getCurrentPlayer() {
-        return players[currentPlayerIndex];
+        return this.currentPlayer;
     }
 
     //TODO Next Turn
@@ -159,9 +181,9 @@ public class Game {
         }
     }
 public void setCurrentPlayer(){
-    currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+    this.currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
     // dazugefügt
-    currentPlayer = players[currentPlayerIndex];
+    this.currentPlayer = players[currentPlayerIndex];
 }
 public boolean checkWinCondition() {
     for (Territory territory : board.getTerritories()) {
