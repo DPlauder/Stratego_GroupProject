@@ -40,6 +40,10 @@ public class Territory {
     public void addArmies(int count) {
         this.armyCount += count;
     }
+    //dazugefügt
+    public void setArmies(int army){
+        this.armyCount = army;
+    }
 
     public void removeArmies(int count) {
         this.armyCount -= count;;

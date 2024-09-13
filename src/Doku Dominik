@@ -49,3 +49,8 @@ TODO
 [Card]
     - unterschiedliche Typen dazufügen
     - Kartenwerte anpassen
+
+
+!!! Rausgenmommen
+compareDiceResults()
+rollDiceResult()

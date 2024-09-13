@@ -14,6 +14,7 @@ public class Main {
 
         Game game = new Game();
         GUI gui = new GUI(game);
+        game.setGUI(gui);
         javax.swing.SwingUtilities.invokeLater(gui::createAndShowGUI);
     }
 }

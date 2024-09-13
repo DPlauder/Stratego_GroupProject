@@ -28,13 +28,14 @@ public class AttackDialog extends JDialog {
 
     private boolean isConfirmed;
 
-    public AttackDialog(Game game, Territory attackTerritory, Territory defendTerritory){
+    public AttackDialog(GUI gui, Game game, Territory attackTerritory, Territory defendTerritory){
 
         this.setContentPane(contentPane);
         this.setModal(true);
 
         this.setTitle("Attack Phase");
 
+        this.ui = gui;
         this.game = game;
         this.attackTerritory = attackTerritory;
         this.defendTerritory = defendTerritory;
@@ -82,17 +83,15 @@ public class AttackDialog extends JDialog {
                     isConfirmed = true;
                     addArmyBtn.setVisible(false);
                     minusArmyBtn.setVisible(false);
-
                 }
                 else{
                     game.attackTerritory(attackTerritory, defendTerritory, attackArmy, defendTerritory.getArmyCount());
-                    attackArmy = attackTerritory.getArmyCount();
+                    attackArmy = game.getAttackArmy();
                     attackArmyUi.setText(String.valueOf(attackArmy));
                     defendTerritoryArmy.setText(String.valueOf(defendTerritory.getArmyCount()));
-                    if(defendTerritory.getArmyCount() == 0 || attackArmy == 0){
-                        dispose();
-                    }
+
                 }
+                ui.updateBoard();
             }
         });
 
@@ -100,7 +99,9 @@ public class AttackDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                     dispose();
+                    ui.updateBoard();
             }
+
         });
 
         this.pack();

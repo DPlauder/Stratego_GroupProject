@@ -19,6 +19,7 @@ public class GUI {
     private Territory selectedTo;
     private boolean isFortifying;
     private boolean isDistributing;
+    private AttackDialog attackDialog;
 
     public GUI(Game game) {
         this.game = game;
@@ -68,7 +69,6 @@ public class GUI {
                         JOptionPane.showMessageDialog(frame, "Distributing phase is not finished yet.");
                     } else {
                         //game.nextTurn();
-                        System.out.println("hello else");
                         //System.out.println("Current Player after turn: " + game.getCurrentPlayer().getName());
                         if (game.checkWinCondition()) {
                             JOptionPane.showMessageDialog(frame, "Player " + game.getCurrentPlayer().getName() + " wins!");
@@ -125,7 +125,7 @@ public class GUI {
         this.selectedFrom = null;
     }
 
-    private void updateBoard() {
+    public void updateBoard() {
         boardPanel.removeAll();
         boardPanel.setLayout(null);
         boardPanel.setBackground(Color.BLUE);
@@ -213,7 +213,6 @@ public class GUI {
         else if(game.getGamePhase() == Gamephase.DISTRIBUTION_TERRITORIES){
             if(game.getArmiesToDistribute() > 0){
                 handleDistributeTerritory(clickedTerritory);
-                System.out.println(game.getArmiesToDistribute());
             }
             updateBoard();
         }
@@ -363,7 +362,6 @@ public class GUI {
     }
     //TODO handler Attack
     private void handleAttackPhase() {
-        System.out.println("hello AttackPhase");
         openAttackDialog();
         /*
         String diceResult = rollDiceResult();
@@ -395,64 +393,6 @@ public class GUI {
     }
 
 
-    private String rollDiceResult() {
-        if (selectedFrom == null || selectedTo == null) {
-            System.out.println("Fehler: Kein Angriff ausgewählt.");
-        }
-        int attackDiceCount = Math.min(3, selectedFrom.getArmyCount());
-        int defendDiceCount = Math.min(2, selectedTo.getArmyCount());
-
-        int[] attackDice = game.rollDice(attackDiceCount);
-        int[] defendDice = game.rollDice(defendDiceCount);
-        return compareDiceResults(attackDice, defendDice);
-    }
-
-    private String compareDiceResults (int[] attackDice, int[] defendDice){
-        if (attackDice == null || defendDice == null) {
-            System.out.println("Fehler: Keine Würfelzahl vorhanden.");
-        }
-        assert attackDice != null;
-        Arrays.sort(attackDice);
-        assert defendDice != null;
-        Arrays.sort(defendDice);
-
-        StringBuilder result = new StringBuilder();
-        result.append("Attacker's dice: ").append(Arrays.toString(reverseArray(attackDice))).append("\n");
-        result.append("Defender's dice: ").append(Arrays.toString(reverseArray(defendDice))).append("\n");
-
-        int minComparisons = Math.min(attackDice.length, defendDice.length);
-        int attackerLosses = 0;
-        int defenderLosses = 0;
-
-        for (int i = 0; i < minComparisons; i++) {
-            if (attackDice[i] > defendDice[i]) {
-                defenderLosses++;
-            } else {
-                attackerLosses++;
-            }
-        }
-
-        result.append("Attacker loses ").append(attackerLosses).append(" army/armies.\n");
-        result.append("Defender loses ").append(defenderLosses).append(" army/armies.\n");
-
-        selectedFrom.removeArmies(attackerLosses);
-        selectedTo.removeArmies(defenderLosses);
-
-        if (selectedTo.getArmyCount() == 0) {
-            game.getCurrentPlayer().addTerritory(selectedTo);
-            game.getCurrentPlayer().addCard(new Card("Infantry"));
-            result.append("Territory conquered! ").append(selectedTo.getName()).append(" is now owned by ").append(game.getCurrentPlayer().getName()).append(".");
-        }
-
-        return result.toString();
-    }
-    private int[] reverseArray(int[] array) {
-        int[] reversed = new int[array.length];
-        for (int i = 0; i < array.length; i++) {
-            reversed[i] = array[array.length - 1 - i];
-        }
-        return reversed;
-    }
 
     private void distributeBonusArmies(Player player, int armiesToDistribute) {
         while (armiesToDistribute > 0) {
@@ -490,10 +430,11 @@ public class GUI {
         JOptionPane.showMessageDialog(frame, "All bonus armies are distributed.");
     }
     public void openAttackDialog(){
-        AttackDialog attackDialog = new AttackDialog(game, selectedFrom, selectedTo);
+        attackDialog = new AttackDialog(this, game, selectedFrom, selectedTo);
         attackDialog.setVisible(true);
+
     }
     public void closeAttackDialog(){
-
+        attackDialog.dispose();
     }
 }

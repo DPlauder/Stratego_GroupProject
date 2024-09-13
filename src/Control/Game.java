@@ -2,10 +2,13 @@ package Control;
 
 import Config.Gamephase;
 import Model.*;
+import View.GUI;
 import java.util.*;
+import java.util.Collections;
 
 public class Game {
     private final Board board;
+    private GUI gui;
     private Player[] players;
     private int currentPlayerIndex;
     private final Random random;
@@ -15,8 +18,6 @@ public class Game {
     // dazu weil öfters verwendet;
     private Player currentPlayer;
 
-
-
     // dazugefügt
     // PHASES
     // 0 = Reinforcement
@@ -25,6 +26,8 @@ public class Game {
     // 3 = Game over
     // 5 = Distribution
     private Gamephase gamePhase;
+    public int attackArmy;
+    private int startAttackArmy;
 
     public Game() {
         this.board = new Board();
@@ -37,6 +40,9 @@ public class Game {
         //ersetzt die Übergabe von players
         setPlayer();
         initializeGame();
+    }
+    public void setGUI(GUI gui){
+        this.gui = gui;
     }
 
     private void initializeGame() {
@@ -72,20 +78,20 @@ public class Game {
     }
     public void setNextGamePhase(){
         switch (gamePhase){
-            case Gamephase.REINFORCEMENT:
+            case REINFORCEMENT:
                 gamePhase = Gamephase.ATTACK;
                 break;
-            case Gamephase.ATTACK:
+            case ATTACK:
                 gamePhase = Gamephase.FORTIFY;
                 break;
-            case Gamephase.FORTIFY:
+            case FORTIFY:
                 gamePhase = Gamephase.REINFORCEMENT;
                 reinforcePhase();
                 break;
-            case Gamephase.DISTRIBUTION_TERRITORIES:
+            case DISTRIBUTION_TERRITORIES:
                 gamePhase = Gamephase.DISTRIBUTION_ARMIES;
                 break;
-            case Gamephase.DISTRIBUTION_ARMIES:
+            case DISTRIBUTION_ARMIES:
                 gamePhase = Gamephase.REINFORCEMENT;
                 reinforcePhase();
                 break;
@@ -198,31 +204,65 @@ public boolean checkWinCondition() {
 
     public void attackTerritory(Territory from, Territory to, int attackArmies, int defendArmies) {
         if (from.getOwner() == getCurrentPlayer() && to.getOwner() != getCurrentPlayer()) {
-            int[] attackDice = rollDice(attackArmies);
-            int[] defendDice = rollDice(defendArmies);
 
-            Arrays.sort(attackDice);
-            Arrays.sort(defendDice);
+            this.startAttackArmy = attackArmies;
+            this.attackArmy = attackArmies;
 
-            int losses = 0;
-            for (int i = 0; i < Math.min(attackDice.length, defendDice.length); i++) {
-                if (attackDice[attackDice.length - 1 - i] > defendDice[defendDice.length - 1 - i]) {
-                    to.removeArmies(1);
+            System.out.println(startAttackArmy);
+            int numAttackDice = Math.min(attackArmies, 3);
+            int numDefendDice = Math.min(defendArmies, 2);
+
+            List<Integer> attackDice = rollDice(numAttackDice);
+            List<Integer> defendDice = rollDice(numDefendDice);
+
+            Collections.sort(attackDice, Collections.reverseOrder());
+            Collections.sort(defendDice, Collections.reverseOrder());
+
+
+            int lossAttack = 0;
+            int lossDefend = 0;
+
+            for (int i = 0; i < Math.min(numAttackDice, numDefendDice); i++) {
+                if (attackDice.get(i) > defendDice.get(i)) {
+                    System.out.println("hello win");
+                    lossDefend++;
                 } else {
-                    from.removeArmies(1);
-                    losses++;
+                    System.out.println("hello lost");
+                    lossAttack++;
                 }
+
+            }
+            attackArmy -= lossAttack;
+            defendArmies -= lossDefend;
+
+
+            if (defendArmies <= 0) {
+                System.out.println("in if " + startAttackArmy);
+                to.setOwner(from.getOwner());
+                to.setArmies(attackArmy);
+                // TODO Redundanz
+                from.setArmies(from.getArmyCount() - startAttackArmy);
+                System.out.println(from.getOwner().getName() + " conquered " + to.getName());
+            } else if(attackArmies <= 0){
+                from.removeArmies(startAttackArmy);
+                to.setArmies(defendArmies);
+            }
+            else{
+                System.out.println(from.getArmyCount());
+                System.out.println(startAttackArmy);
+                System.out.println(attackArmies);
+                to.setArmies(defendArmies);
+                from.setArmies(from.getArmyCount() - startAttackArmy + attackArmy);
             }
 
-            if (to.getArmyCount() == 0) {
-                to.setOwner(from.getOwner());
-                to.addArmies(attackArmies - losses);
-                from.removeArmies(attackArmies - losses);
-                System.out.println(from.getOwner().getName() + " conquered " + to.getName());
-            }
         } else {
             System.out.println("Invalid attack!");
         }
+        gui.updateBoard();
+
+    }
+    public int getAttackArmy(){
+        return  this.attackArmy;
     }
 
     private void fortifyPhase(){
@@ -245,11 +285,11 @@ public boolean checkWinCondition() {
     }
 
 
-
-    public int[] rollDice(int numDice) {
-        int[] dice = new int[numDice];
+// array in ArrayList umgewandelt für mehr funktionen
+    public List<Integer> rollDice(int numDice) {
+        List<Integer> dice = new ArrayList<>();
         for (int i = 0; i < numDice; i++) {
-            dice[i] = random.nextInt(6) + 1;
+            dice.add(random.nextInt(6) + 1);
         }
         return dice;
     }
